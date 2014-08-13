@@ -1,7 +1,7 @@
 var assert = require('chai').assert;
 var source = __dirname.replace('test', 'src');
 
-suite('Required', function () {
+suite('notEmpty', function () {
 	var notEmpty = require(source.concat('/notEmpty'));
 
 	test('should return false for empty values of: strings, arrays, objects, etc', function () {

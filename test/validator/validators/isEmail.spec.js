@@ -1,3 +1,14 @@
-/**
- * Created by guilherme on 13/08/14.
- */
+var assert = require('chai').assert;
+var source = __dirname.replace('test', 'src');
+
+suite('isEmail', function () {
+	var isEmail = require(source.concat('/isEmail'));
+
+	test('should return true if passed valid email', function () {
+		assert.isTrue(isEmail('email@gmail.com'));
+	});
+
+	test('should return false if passed invalid email', function () {
+		assert.isFalse(isEmail('email.com.br'));
+	});
+});
