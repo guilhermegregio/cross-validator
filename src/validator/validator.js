@@ -1,4 +1,7 @@
 var util = require('./util');
+var execValidators = require('./execValidators');
+var ValidatorResult = require('./validatorResult');
+
 /**
  * Class Validator
  * @param data Object
@@ -17,6 +20,12 @@ var Validator = function (data, constrains) {
 
 	this.getConstrains = function () {
 		return _constrains;
+	};
+
+	this.validate = function () {
+		var errors = {};
+		execValidators.using(this.getConstrains()).outErrors(errors).forData(this.getData()).validate();
+		return new ValidatorResult(errors);
 	};
 };
 

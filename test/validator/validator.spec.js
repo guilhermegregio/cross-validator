@@ -24,4 +24,13 @@ suite('Validator', function () {
 			assert.throws(iThrow, Error, expectError);
 		});
 	});
+
+	suite('Execute validate()', function(){
+		var ValidatorResult = require(source.concat('/validatorResult'));
+		test('should return validatorResult', function(){
+			var vResult = new Validator({name: 'guilherme'}, ['notEmpty($name)']).validate();
+
+			assert.instanceOf(vResult, ValidatorResult, 'vResult is instance of ValidatorResult');
+		});
+	});
 });
