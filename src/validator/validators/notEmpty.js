@@ -1,7 +1,7 @@
 var util = require('../util');
 
-var required = function (value) {
+var notEmpty = function (value) {
 	return !util.isEmpty(value);
 };
 
-module.exports = required;
+module.exports = notEmpty;

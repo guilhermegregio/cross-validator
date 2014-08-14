@@ -1,3 +1,13 @@
+var validators = {
+	notEmpty: require('./validators/notEmpty'),
+	isEmail: require('./validators/isEmail'),
+	default: function () {
+		return true;
+	},
+	exec: function (expression) {
+		var fn = (validators[expression.method] || validators.default);
+		return fn.apply(this, expression.paramsValue);
+	}
+};
 
-module.exports.notEmpty = require('./validators/notEmpty');
-module.exports.isEmail = require('./validators/isEmail');
+module.exports = validators;
