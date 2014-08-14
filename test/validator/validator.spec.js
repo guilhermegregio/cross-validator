@@ -6,7 +6,6 @@ suite('Validator', function () {
 	var Validator = require(source.concat('/validator'));
 
 	suite('Instance Validator', function () {
-
 		test('should throw exception when given invalid data in constructor', function () {
 			var iThrow = function () {
 				new Validator();

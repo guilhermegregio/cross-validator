@@ -10,6 +10,14 @@ var Validator = function (data, constrains) {
 
 	verifyData(_data);
 	verifyConstrains(_constrains);
+
+	this.getData = function () {
+		return _data;
+	};
+
+	this.getConstrains = function () {
+		return _constrains;
+	};
 };
 
 function verifyData(data) {
