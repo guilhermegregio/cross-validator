@@ -4,9 +4,11 @@
 	"description": "A Cross Script Validator, node, browser, java",
 	"main": "src/index.js",
 	"scripts": {
-		"test": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
-		"watch": "./node_modules/mocha/bin/mocha --watch test/*.js test/*/*.js test/*/*/*.js",
-		"jshint": "./node_modules/.bin/jshint ./src"
+		"test": "npm run jshint; ./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
+		"watch": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js --watch",
+		"jshint": "./node_modules/.bin/jshint ./src",
+		"browserify": "./node_modules/.bin/browserify ./src/index.js -o ./build/validator.js -s Validator",
+		"minify": "npm run browserify; ./node_modules/.bin/uglifyjs -o ./build/validator.min.js ./build/validator.js"
 	},
 	"keywords": [
 		"cross",
@@ -20,8 +22,10 @@
 	"author": "Guilherme M Gregio <guilherme@gregio.net>",
 	"license": "MIT",
 	"devDependencies": {
+		"browserify": "^5.10.0",
 		"chai": "^1.9.1",
 		"jshint": "^2.5.3",
-		"mocha": "^1.21.4"
+		"mocha": "^1.21.4",
+		"uglify-js": "^2.4.15"
 	}
 }

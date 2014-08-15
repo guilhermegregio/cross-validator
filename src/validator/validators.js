@@ -5,11 +5,11 @@
 var validators = {
 	notEmpty: require('./validators/notEmpty'),
 	isEmail: require('./validators/isEmail'),
-	default: function () {
+	defaultMethod: function () {
 		return true;
 	},
 	exec: function (expression) {
-		var fn = (validators[expression.method] || validators.default);
+		var fn = (validators[expression.method] || validators.defaultMethod);
 		return fn.apply(this, expression.paramsValue);
 	}
 };

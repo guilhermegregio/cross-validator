@@ -30,13 +30,11 @@ var ValidatorResult = function (errors) {
 	var FieldApi = function (field) {
 		var self = this;
 		Object.keys(validators).forEach(function (validator) {
-			if (validator === 'exec' || validator === 'default') {
+			if (validator === 'exec' || validator === 'defaultMethod') {
 				return;
 			}
 
-			var name = validator.replace(/(^.)/, function (char) {
-				return char.toUpperCase();
-			});
+			var name = validator.charAt(0).toUpperCase() + validator.substring(1);
 
 			var method = "has:ValidatorPassed".replace(":Validator", name);
 			self[method] = function () {
