@@ -4,8 +4,8 @@
 	"description": "A Cross Script Validator, node, browser, java",
 	"main": "src/index.js",
 	"scripts": {
-		"all": "npm run jshint; npm test; npm run coverage; npm run minify",
-		"test": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
+		"all": "npm test; npm run coverage; npm run minify",
+		"test": "npm run jshint; ./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
 		"watch": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js --watch",
 		"coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js test/*/*/*.js",
 		"jshint": "./node_modules/.bin/jshint ./src",
