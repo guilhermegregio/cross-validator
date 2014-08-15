@@ -7,7 +7,7 @@ var source = __dirname.replace('test', 'src');
 suite('execValidators', function () {
 	var execValidators = require(source.concat('/execValidators'));
 
-	test('', function () {
+	test('should added errors on object errors', function () {
 		var constrains = ['notEmpty($name)'];
 		var errors = {};
 		var data = {};
