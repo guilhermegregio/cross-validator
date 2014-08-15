@@ -1,4 +1,5 @@
 'use strict';
+/*global toString*/
 /**
  * @name util
  * @author Guilherme Mangabeira Gregio <guilherme@gregio.net>
@@ -61,7 +62,9 @@ util.deep = function (obj, key, value) {
 		value = root;
 	} else {
 		// Get deep value
-		while ((obj = obj[keys[i++]]) != null && i < n) {
+		var exec = true;
+		while (exec && i < n) {
+			exec = (obj = obj[keys[i++]]) != null;
 		}
 		value = i < n ? void 0 : obj;
 	}
@@ -97,15 +100,17 @@ util.clone = function clone(item) {
 		} else if (typeof item == "object") {
 			// testing that this is DOM
 			if (item.nodeType && typeof item.cloneNode == "function") {
-				var result = item.cloneNode(true);
+				result = item.cloneNode(true);
 			} else if (!item.prototype) { // check that this is a literal
 				if (item instanceof Date) {
 					result = new Date(item);
 				} else {
 					// it is an object literal
 					result = {};
-					for (var i in item) {
-						result[i] = clone(item[i]);
+					var keys = Object.keys(item);
+
+					for(var i = 0, itemLength = keys.length; i < itemLength; i++){
+						result[keys[i]] = clone(item[keys[i]]);
 					}
 				}
 			} else {

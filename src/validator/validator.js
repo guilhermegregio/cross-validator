@@ -33,7 +33,8 @@ var Validator = function (data, constrains) {
 
 function verifyData(data) {
 	if (util.isEmpty(data) || !util.isObject(data)) {
-		var message = 'Data is Invalid. Expected an Object not empty, but was given: :result'.replace(":result", JSON.stringify(data, null, 4));
+		var message = 'Data is Invalid. Expected an Object not empty, but was given: :result';
+		message = message.replace(":result", JSON.stringify(data, null, 4));
 
 		throw new InvalidArguments(message);
 	}
@@ -41,7 +42,8 @@ function verifyData(data) {
 
 function verifyConstrains(constrains) {
 	if (util.isEmpty(constrains) || !util.isArray(constrains)) {
-		var message = 'Constrains is Invalid. Expected an Array not empty, but was given: :result'.replace(":result", JSON.stringify(constrains, null, 4));
+		var message = 'Constrains is Invalid. Expected an Array not empty, but was given: :result';
+		message = message.replace(":result", JSON.stringify(constrains, null, 4));
 
 		throw new InvalidArguments(message);
 	}

@@ -15,14 +15,15 @@ var exec = {
 var Validate = {
 	validate: function () {
 		exec.constrains.forEach(function (constrain) {
-			exec.expressions.push(new expression(constrain));
+			exec.expressions.push(new Expression(constrain));
 		});
 
-		exec.expressions.forEach(function(expression){
-			if(!validators.exec(expression)){
-				exec.loggerError[expression.params[0].replace('$', '')] = exec.loggerError[expression.params[0].replace('$', '')] || [];
-				exec.loggerError[expression.params[0].replace('$', '')].push(expression.method);
-			};
+		exec.expressions.forEach(function (expression) {
+			if (!validators.exec(expression)) {
+				var param = expression.params[0].replace('$', '');
+				exec.loggerError[param] = exec.loggerError[param] || [];
+				exec.loggerError[param].push(expression.method);
+			}
 		});
 	}
 };
@@ -48,7 +49,7 @@ var ConstrainsValidator = {
 	}
 };
 
-var expression = function (constrain) {
+var Expression = function (constrain) {
 	var expr = util.expressionToArray(constrain);
 	this.method = expr.shift();
 	this.params = expr;
@@ -63,6 +64,6 @@ var expression = function (constrain) {
 	});
 
 	this.paramsValue = paramsValue;
-}
+};
 
 module.exports = ConstrainsValidator;
