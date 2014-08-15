@@ -2,7 +2,7 @@
 	"name": "cross-validator",
 	"version": "0.0.1-snapshot",
 	"description": "A Cross Script Validator, node, browser, java",
-	"main": "src/validator.js",
+	"main": "src/index.js",
 	"scripts": {
 		"test": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
 		"watch": "./node_modules/mocha/bin/mocha --watch test/*.js test/*/*.js test/*/*/*.js"
