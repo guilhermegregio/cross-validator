@@ -1,3 +1,6 @@
+/**
+ * @author Guilherme M Gregio <guilherme@gregio.net>
+ */
 var validators = {
 	notEmpty: require('./validators/notEmpty'),
 	isEmail: require('./validators/isEmail'),

@@ -1,2 +1,49 @@
-module.exports = function () {
+var util = require('./util');
+var validators = require('./validators');
+
+/**
+ *
+ * @param errors
+ * @author Guilherme M Gregio <guilherme@gregio.net>
+ */
+var ValidatorResult = function (errors) {
+	var _errors = util.clone(errors);
+
+	this.hasErrors = function () {
+		return !util.isEmpty(_errors);
+	};
+
+	this.getAllFailures = function () {
+		return _errors;
+	};
+
+	this.getErrorsOf = function (field) {
+
+		return util.deep(_errors, field);
+	};
+
+	this.forField = function (field) {
+		return new FieldApi(field);
+	};
+
+	var FieldApi = function (field) {
+		var self = this;
+		Object.keys(validators).forEach(function (validator) {
+			if (validator === 'exec' || validator === 'default') {
+				return;
+			}
+
+			var name = validator.replace(/(^.)/, function (char) {
+				return char.toUpperCase();
+			});
+
+			var method = "has:ValidatorPassed".replace(":Validator", name);
+			self[method] = function () {
+				return (util.deep(_errors, field) || []).indexOf(validator) === -1;
+			}
+		});
+	};
+
 };
+
+module.exports = ValidatorResult;

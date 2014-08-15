@@ -1,6 +1,9 @@
 var util = require('./util');
 var validators = require('./validators');
 
+/**
+ * @author Guilherme M Gregio <guilherme@gregio.net>
+ */
 var exec = {
 	constrains: [],
 	loggerError: {},

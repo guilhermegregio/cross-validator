@@ -1,6 +1,9 @@
 var assert = require('chai').assert;
 var source = __dirname.replace('test', 'src');
 
+/**
+ * @author Guilherme M Gregio <guilherme@gregio.net>
+ */
 suite('Util', function () {
 	var util = require(source.concat('/util'));
 

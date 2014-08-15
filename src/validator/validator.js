@@ -6,6 +6,7 @@ var ValidatorResult = require('./validatorResult');
  * Class Validator
  * @param data Object
  * @param constrains Array
+ * @author Guilherme M Gregio <guilherme@gregio.net>
  */
 var Validator = function (data, constrains) {
 	var _data = data;
