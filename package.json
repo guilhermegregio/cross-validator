@@ -4,8 +4,10 @@
 	"description": "A Cross Script Validator, node, browser, java",
 	"main": "src/index.js",
 	"scripts": {
-		"test": "npm run jshint; ./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
+		"all": "npm run jshint; npm test; npm run coverage; npm run minify",
+		"test": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
 		"watch": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js --watch",
+		"coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha",
 		"jshint": "./node_modules/.bin/jshint ./src",
 		"browserify": "./node_modules/.bin/browserify ./src/index.js -o ./build/validator.js -s Validator",
 		"minify": "npm run browserify; ./node_modules/.bin/uglifyjs -o ./build/validator.min.js ./build/validator.js"
@@ -24,6 +26,7 @@
 	"devDependencies": {
 		"browserify": "^5.10.0",
 		"chai": "^1.9.1",
+		"istanbul": "^0.3.0",
 		"jshint": "^2.5.3",
 		"mocha": "^1.21.4",
 		"uglify-js": "^2.4.15"
