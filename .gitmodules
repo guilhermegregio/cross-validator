@@ -1,3 +1,0 @@
-[submodule "samples/node"]
-	path = samples/node
-	url = https://github.com/4data/node-cross-validator-sample.git
