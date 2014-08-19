@@ -1,0 +1,8 @@
+{
+	"name": "sample-node",
+	"main": "index.js",
+	"dependencies": {
+		"cross-validator": "0.0.1-snapshot",
+		"prompt": "^0.2.13"
+	}
+}
