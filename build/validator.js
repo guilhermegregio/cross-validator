@@ -26,6 +26,7 @@ var Validate = {
 		});
 
 		exec.expressions.forEach(function (expression) {
+
 			if (!validators.exec(expression)) {
 				var param = expression.params[0].replace('$', '');
 				exec.loggerError[param] = exec.loggerError[param] || [];
@@ -50,6 +51,9 @@ var DataValidator = {
 
 var ConstrainsValidator = {
 	using: function (constrains) {
+		exec.loggerError = {};
+		exec.data = {};
+		exec.expressions = [];
 		exec.constrains = constrains;
 
 		return DataValidator;
@@ -309,7 +313,7 @@ var ValidatorResult = function (errors) {
 
 			var method = "has:ValidatorPassed".replace(":Validator", name);
 			self[method] = function () {
-				return (util.deep(_errors, field) || []).indexOf(validator) === -1;
+				return (_errors[field] || []).indexOf(validator) === -1;
 			};
 		});
 	};
@@ -355,7 +359,7 @@ var util = require('../util');
  * @author Guilherme M Gregio <guilherme@gregio.net>
  */
 var notEmpty = function (value) {
-	return !util.isEmpty(value);
+    return !util.isEmpty(value);
 };
 
 module.exports = notEmpty;
