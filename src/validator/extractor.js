@@ -32,7 +32,8 @@ var Extractor = function (data) {
         }
 
         if (util.isArray(object)) {
-            object = this.collectionObjectFinder(object, nodes, position + 1);
+            var collection = this.collectionObjectFinder(object, nodes, position + 1);
+            item.value = collection;
         } else if (util.isObject(object)) {
             object = util.deep(object, nodes[position]);
 
@@ -53,14 +54,12 @@ var Extractor = function (data) {
         var array = [];
 
         for (var i = 0, attrLen = obj.length; i < attrLen; i++) {
-            console.log(obj[i], nodes[count]);
-            object = util.deep(object[i], nodes[count]);
-            console.log('object', object, nodes);
+            var object = util.deep(obj[i], nodes[count]);
 
             var item = new Item();
 
             item.value = object;
-            item.path = nodes[count];
+            item.path = nodes[count - 1] + '['+ i + ']' + '.' + nodes[count];
             item.isLast = true;
             array.push(item);
         }
