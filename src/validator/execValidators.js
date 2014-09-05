@@ -1,6 +1,7 @@
 'use strict';
 var util = require('./util');
 var validators = require('./validators');
+var Extractor = require('./extractor');
 
 /**
  * @author Guilherme M Gregio <guilherme@gregio.net>
@@ -9,7 +10,8 @@ var exec = {
     constrains: [],
     loggerError: {},
     data: {},
-    expressions: []
+    expressions: [],
+    itemsToValidate: {}
 };
 
 var Validate = {
@@ -45,7 +47,6 @@ var DataValidator = {
 var ConstrainsValidator = {
     using: function (constrains) {
         exec.constrains = constrains;
-
         return DataValidator;
     }
 };
@@ -56,14 +57,22 @@ var Expression = function (constrain) {
     this.params = expr;
     var paramsValue = [];
 
+    console.log('method', this.method);
+    console.log('params', this.params);
+
     this.params.forEach(function (param) {
         if (/^\$/.test(param)) {
+
+            var a = param.replace('$', '');
+            a = new Extractor(exec.data).extract(a);
+            console.log('valor após extractor ', a);
+
             paramsValue.unshift(util.deep(exec.data, param.replace('$', '')));
             return;
         }
         paramsValue.push(param);
     });
-
+    console.log('paramsValue', paramsValue);
     this.paramsValue = paramsValue;
 };
 
