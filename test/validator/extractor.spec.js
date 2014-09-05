@@ -2,68 +2,75 @@ var assert = require('chai').assert;
 var source = __dirname.replace('test', 'src');
 
 /**
+ * @author Guilherme M Gregio <guilherme@gregio.net>
  * @author Bruno z Marques <zaccabruno@gmail.com>
  */
 suite('extractor', function () {
     var Extractor = require(source.concat('/extractor'));
     var util = require(source.concat('/util'));
 
-    test('should extract items of array', function () {
+    test('value simple', function () {
+        var result = new Extractor({teste: 'valor'}).extract('teste');
 
-        /*var result = new Extractor('eita').extract();
+        assert.deepEqual(result, [
+            {key: 'teste', value: 'valor'}
+        ]);
+    });
 
-        assert.deepEqual(result, [{path:'', value:'eita'}]);*/
+    test('value nasted object', function () {
+        var result = new Extractor({user: {person: {name: 'First Name'}}}).extract('user.person.name');
 
-        /*var result2 = new Extractor({teste: 'eita2'}).extract('teste');
+        assert.deepEqual(result, [
+            {key: 'user.person.name', value: 'First Name'}
+        ]);
+    });
 
-        assert.deepEqual(result2,  [{path:'teste', value:'eita2'}]);*/
+    test('value arrays with nasted object', function () {
+        var result = new Extractor({user: {contacts: [
+            {type: 'MAIL', value: 'user@email.com'},
+            {type: 'MAIL', value: 'outro@gmail.com'}
+        ]}}).extract('user.contacts.value');
 
-        /*var result3 = new Extractor({teste: {oppa: 'eita3'}}).extract('teste.oppa');
+        assert.deepEqual(result, [
+            {key: 'user.contacts[0].value', value: 'user@email.com'},
+            {key: 'user.contacts[1].value', value: 'outro@gmail.com'}
+        ]);
+    });
 
-        assert.deepEqual(result3,  [{path:'teste.oppa', value:'eita3'}]);*/
-
-       var result4 = new Extractor({teste: [
-            {oppa: 'eita3'},
-            {oppa: 'good'}
-        ]}).extract('teste.oppa');
-
-        assert.deepEqual(result4, ['teste[0].oppa.eita3', 'teste[1].oppa.good']);
-
-        /*var a = {
-            lista: [
-                {
-                    subLista: [
-                        {
-                            final: 'final'
-                        },
-                        {
-                            final: 'outroFinal'
+    test('value arrays with nasted arrays with object', function () {
+        var result = new Extractor({
+            lawsuit: {
+                deposits: [
+                    {
+                        bank: {
+                            extract: [
+                                {
+                                    file: 'upload.png'
+                                }
+                            ]
                         }
-                    ]
-                },
-                {
-                    subLista: [
-                        {
-                            final: 'sub2'
-                        },
-                        {
-                            final: 'outroSub2'
+                    },
+                    {
+                        bank: {
+                            extract: [
+                                {
+                                    file: 'newUpload.png'
+                                },
+                                {
+                                    file: 'outroFile.png'
+                                }
+                            ]
                         }
-                    ]
-                }
-            ]
-        };
-        var result5 = new Extractor(a).extract('lista.subLista.final');
+                    }
+                ]
+            }
+        }).extract('lawsuit.deposits.bank.extract.file');
 
-        assert.deepEqual(result5, ['lista[0].subLista[0].final.final',
-                                   'lista[0].subLista[1].final.outroFinal',
-                                   'lista[1].subLista[0].final.sub2',
-                                   'lista[1].subLista[1].final.outroSub2']);*/
-        /*assert.deepEqual(result5, [{key:'lista[0].subLista[0].final', value:'final'},
-                                   {key:'lista[0].subLista[1].final', value:'outroFinal'},
-                                   {key:'lista[1].subLista[0].final', value:'sub2'},
-                                   {key:'lista[1].subLista[1].final', value:'outroSub2'}*//**//*
-        ]);*/
+        assert.deepEqual(result, [
+            {key: 'lawsuit.deposits[0].bank.extract[0].file', value: 'upload.png'},
+            {key: 'lawsuit.deposits[1].bank.extract[0].file', value: 'newUpload.png'},
+            {key: 'lawsuit.deposits[1].bank.extract[1].file', value: 'outroFile.png'}
+        ]);
     });
 
 });

@@ -3,98 +3,51 @@
 var util = require('./util');
 
 /**
- * @author Bruno z Marques <zaccabruno@gmail.com>
+ * @author Guilherme M Gregio <guilherme@gregio.net>
+ * @author Bruno M Marques <zaccabruno@gmail.com>
  */
 var Extractor = function (data) {
 
     var object = data;
 
     this.extract = function (path) {
-        var nodes = (path || '').split('.');
-        var result = this.getValue(nodes, 0);
-        console.log(result.paths());
-        return result;
+        return extractor(object, path);
     };
 
-    this.getValue = function (nodes, position) {
+    var extractor = function(obj, fullPath, position, path, result) {
+        var pathArr = fullPath.split('.');
+        result = result || [];
+        path = path || '';
+        position = position || 0;
 
-        var item = new Item();
-        var localCount = 0;
-        var finalPath = '';
+        obj = obj[pathArr[position]];
+        path = path + '.' + pathArr[position];
+        path = path.replace(/^\./, '');
 
-        if (nodes.length - 1 === position) {
-            item.isLast = true;
+        if (pathArr.length - 1 <= position) {
+            result.push(new Item(path, obj));
+            return result;
         }
 
-        while (localCount <= position) {
-            finalPath = finalPath + '.' + nodes[localCount];
-            localCount++;
+        if (Array.isArray(obj)) {
+
+            path = path.concat('[:index]');
+            obj.forEach(function (item, index) {
+                var newPath = path.replace(':index', index);
+                extractor(item, fullPath, position + 1, newPath, result);
+            });
+
+            return result;
         }
 
-        if (util.isArray(object)) {
-            var collection = this.collectionObjectFinder(object, nodes, position + 1);
-            item.value = collection;
-        } else if (util.isObject(object)) {
-            object = util.deep(object, nodes[position]);
-
-            if(!item.isLast){
-                item.value = this.getValue(nodes, position);
-            } else {
-                item.value = object;
-            }
-        }
-
-        item.path = finalPath;
-        return item;
-
-    };
-
-    this.collectionObjectFinder = function (obj, nodes, count) {
-
-        var array = [];
-
-        for (var i = 0, attrLen = obj.length; i < attrLen; i++) {
-            var object = util.deep(obj[i], nodes[count]);
-
-            var item = new Item();
-
-            item.value = object;
-            item.path = nodes[count - 1] + '['+ i + ']' + '.' + nodes[count];
-            item.isLast = true;
-            array.push(item);
-        }
-
-        return array;
+        return extractor(obj, fullPath, position + 1, path, result);
     };
 
 };
 
-var Item = function () {
-
-    this.isLast = false;
-    this.value = null;
-    this.path = null;
-
-    this.paths = function () {
-        var result = [];
-        if (this.isLast) {
-            result.push(this);
-        } else {
-
-            if (util.isArray(this.value)) {
-                this.value.forEach(function (item) {
-                    result = result.concat(item.paths());
-                });
-            } else if (util.isObject(this.value)){
-                result = result.concat(this.value.paths());
-            }
-
-        }
-
-        return result;
-    }
-
-}
-
+var Item = function(key, value) {
+    this.key = key;
+    this.value = value;
+};
 
 module.exports = Extractor;
