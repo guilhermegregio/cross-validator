@@ -17,16 +17,11 @@ var exec = {
 var Validate = {
     validate: function () {
         exec.constrains.forEach(function (constrain) {
-              exec.expressions.push(new Expression(constrain));
+            exec.expressions = exec.expressions.concat(new Expressions(constrain));
         });
 
         exec.expressions.forEach(function (expression) {
-
-            if (!validators.exec(expression)) {
-                var param = expression.params[0].replace('$', '');
-                exec.loggerError[param] = exec.loggerError[param] || [];
-                exec.loggerError[param].push(expression.method);
-            }
+            validators.exec(expression, exec.loggerError);
         });
     }
 };
@@ -46,34 +41,51 @@ var DataValidator = {
 
 var ConstrainsValidator = {
     using: function (constrains) {
+
         exec.constrains = constrains;
+        exec.loggerError = {};
+        exec.data = {},
+        exec.expressions = [];
+        exec.itemsToValidate = {};
+
         return DataValidator;
     }
 };
 
-var Expression = function (constrain) {
-    var expr = util.expressionToArray(constrain);
-    this.method = expr.shift();
-    this.params = expr;
-    var paramsValue = [];
+var Expressions = function (constrain) {
+    var result = [];
+    var items = [];
 
-    console.log('method', this.method);
-    console.log('params', this.params);
+    var expression = util.expressionToArray(constrain);
+    var method = expression.shift();
+    var params = expression;
 
-    this.params.forEach(function (param) {
-        if (/^\$/.test(param)) {
+    if(params.length === 1) {
+        var itemsExtracted = new Extractor(exec.data).extract(params[0].replace('$', ''));
 
-            var a = param.replace('$', '');
-            a = new Extractor(exec.data).extract(a);
-            console.log('valor após extractor ', a);
+        itemsExtracted.forEach(function (item) {
+            result.push(new Expression(item, method));
+        });
 
-            paramsValue.unshift(util.deep(exec.data, param.replace('$', '')));
-            return;
-        }
-        paramsValue.push(param);
+        return result;
+    }
+
+    params.forEach(function (param) {
+        var itemsExtracted = new Extractor(exec.data).extract(param.replace('$', ''));
+        items = items.concat(itemsExtracted);
     });
-    console.log('paramsValue', paramsValue);
-    this.paramsValue = paramsValue;
+
+    result.push(new Expression(items, method));
+
+    return result;
+};
+
+var Expression = function(items, method) {
+    var expression = {};
+    expression.method = method;
+    expression.paramsValue = items;
+
+    return expression;
 };
 
 module.exports = ConstrainsValidator;

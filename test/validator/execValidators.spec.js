@@ -12,9 +12,27 @@ suite('execValidators', function () {
 		var errors = {};
 		var data = {};
 
-		execValidators.using(constrains).outErrors(errors).forData(data).validate();
+		new execValidators.using(constrains).outErrors(errors).forData(data).validate();
 
 		assert.deepEqual({name: ['notEmpty']}, errors);
 	});
+
+    test('should validate a list and added errors on object errors', function () {
+        var constrains = ['notEmpty($deposits.name)'];
+        var errors = {};
+        var data = {};
+
+        var deposit = {};
+        var deposit2 = {};
+
+        data.deposits = [];
+
+        data.deposits.push(deposit);
+        data.deposits.push(deposit2);
+
+        new execValidators.using(constrains).outErrors(errors).forData(data).validate();
+
+        assert.deepEqual({'deposits[0].name': ['notEmpty'], 'deposits[1].name': ['notEmpty']}, errors);
+    });
 
 });
