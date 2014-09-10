@@ -60,22 +60,6 @@ var Expressions = function (constrain) {
     var method = expression.shift();
     var params = expression;
 
-    if(params.length === 1) {
-        var itemsExtracted = [];
-
-        if (/^\$/.test(params[0])) {
-            itemsExtracted = new Extractor(exec.data).extract(params[0].replace('$', ''));
-        } else {
-            itemsExtracted = new LiteralItem(params[0]);
-        }
-
-        itemsExtracted.forEach(function (item) {
-            result.push(new Expression(item, method));
-        });
-
-        return result;
-    }
-
     params.forEach(function (param) {
         if (/^\$/.test(param)) {
             var itemsExtracted = new Extractor(exec.data).extract(param.replace('$', ''));
@@ -84,6 +68,15 @@ var Expressions = function (constrain) {
             items = items.concat(new LiteralItem(param));
         }
     });
+
+    if(params.length === 1) {
+
+        items.forEach(function(item){
+            result.push(new Expression(item, method));
+        });
+
+        return result;
+    }
 
     result.push(new Expression(items, method));
 
