@@ -17,6 +17,14 @@ suite('extractor', function () {
         ]);
     });
 
+    test('literal value', function () {
+        var result = new Extractor('valor').extract('literalvalue');
+
+        assert.deepEqual(result, [
+            {key: 'literalvalue', value: 'valor'}
+        ]);
+    });
+
     test('value nasted object', function () {
         var result = new Extractor({user: {person: {name: 'First Name'}}}).extract('user.person.name');
 

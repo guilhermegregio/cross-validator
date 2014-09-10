@@ -15,6 +15,13 @@ var Extractor = function (data) {
     };
 
     var extractor = function(obj, fullPath, position, path, result) {
+
+        if(fullPath === 'literalvalue') {
+            result = [];
+            result.push(new Item(fullPath, obj));
+            return result;
+        }
+
         var pathArr = fullPath.split('.');
         result = result || [];
         path = path || '';

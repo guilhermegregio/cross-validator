@@ -61,11 +61,18 @@ var Expressions = function (constrain) {
     var params = expression;
 
     if(params.length === 1) {
-        var itemsExtracted = new Extractor(exec.data).extract(params[0].replace('$', ''));
+        if (/^\$/.test(params[0])) {
+            var itemsExtracted = new Extractor(exec.data).extract(params[0].replace('$', ''));
 
-        itemsExtracted.forEach(function (item) {
-            result.push(new Expression(item, method));
-        });
+            itemsExtracted.forEach(function (item) {
+                result.push(new Expression(item, method));
+            });
+        } else {
+            var itemsExtracted = new Extractor(params[0]).extract();
+            itemsExtracted.forEach(function (item) {
+                result.push(new Expression(item, method));
+            });
+        }
 
         return result;
     }

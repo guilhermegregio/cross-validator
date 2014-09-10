@@ -35,4 +35,11 @@ suite('execValidators', function () {
         assert.deepEqual({'deposits[0].name': ['notEmpty'], 'deposits[1].name': ['notEmpty']}, errors);
     });
 
+    test('should validate a literal object', function(){
+        var constrains = ['notEmpty(name)'];
+        var errors = {};
+
+        new execValidators.using(constrains).outErrors(errors).forData().validate();
+    });
+
 });
