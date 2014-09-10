@@ -61,31 +61,38 @@ var Expressions = function (constrain) {
     var params = expression;
 
     if(params.length === 1) {
-        if (/^\$/.test(params[0])) {
-            var itemsExtracted = new Extractor(exec.data).extract(params[0].replace('$', ''));
+        var itemsExtracted = [];
 
-            itemsExtracted.forEach(function (item) {
-                result.push(new Expression(item, method));
-            });
+        if (/^\$/.test(params[0])) {
+            itemsExtracted = new Extractor(exec.data).extract(params[0].replace('$', ''));
         } else {
-            var itemsExtracted = new Extractor(params[0]).extract();
-            itemsExtracted.forEach(function (item) {
-                result.push(new Expression(item, method));
-            });
+            itemsExtracted = new LiteralItem(params[0]);
         }
+
+        itemsExtracted.forEach(function (item) {
+            result.push(new Expression(item, method));
+        });
 
         return result;
     }
 
     params.forEach(function (param) {
-        var itemsExtracted = new Extractor(exec.data).extract(param.replace('$', ''));
-        items = items.concat(itemsExtracted);
+        if (/^\$/.test(param)) {
+            var itemsExtracted = new Extractor(exec.data).extract(param.replace('$', ''));
+            items = items.concat(itemsExtracted);
+        } else {
+            items = items.concat(new LiteralItem(param));
+        }
     });
 
     result.push(new Expression(items, method));
 
     return result;
 };
+
+var LiteralItem = function(value) {
+    return new Extractor(value).extract('literalvalue');
+}
 
 var Expression = function(items, method) {
     var expression = {};

@@ -40,6 +40,8 @@ suite('execValidators', function () {
         var errors = {};
 
         new execValidators.using(constrains).outErrors(errors).forData().validate();
+
+        assert.deepEqual({}, errors);
     });
 
 });
