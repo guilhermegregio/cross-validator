@@ -8,9 +8,13 @@ var validators = {
 	defaultMethod: function () {
 		return true;
 	},
-	exec: function (expression) {
+	exec: function (expression, loggerError) {
 		var fn = (validators[expression.method] || validators.defaultMethod);
-		return fn.apply(this, expression.paramsValue);
+
+        if(!fn.call(this, expression.paramsValue)) {
+            loggerError[expression.paramsValue.key] = loggerError[expression.paramsValue.key] || [];
+            loggerError[expression.paramsValue.key].push(expression.method);
+        }
 	}
 };
 
