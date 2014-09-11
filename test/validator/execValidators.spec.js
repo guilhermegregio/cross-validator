@@ -44,4 +44,19 @@ suite('execValidators', function () {
         assert.deepEqual({}, errors);
     });
 
+    test('test', function(){
+        var constrains = ['notEmpty($bankAccount.bank.name)'];
+        var errors = {};
+        var data = {};
+
+        data.bankAccount = {
+            bank: {}
+        };
+
+
+        new execValidators.using(constrains).outErrors(errors).forData(data).validate();
+
+        assert.deepEqual({'bankAccount.bank.name': ['notEmpty']}, errors);
+    });
+
 });

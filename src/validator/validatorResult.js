@@ -38,7 +38,7 @@ var ValidatorResult = function (errors) {
 
 			var method = "has:ValidatorPassed".replace(":Validator", name);
 			self[method] = function () {
-				return (util.deep(_errors, field) || []).indexOf(validator) === -1;
+				return (_errors[field] || []).indexOf(validator) === -1;
 			};
 		});
 	};

@@ -4,77 +4,167 @@
  * @author Guilherme M Gregio <guilherme@gregio.net>
  */
 module.exports = require('./validator/validator');
-},{"./validator/validator":4}],2:[function(require,module,exports){
+},{"./validator/validator":5}],2:[function(require,module,exports){
 'use strict';
 var util = require('./util');
 var validators = require('./validators');
+var Extractor = require('./extractor');
 
 /**
  * @author Guilherme M Gregio <guilherme@gregio.net>
  */
 var exec = {
-	constrains: [],
-	loggerError: {},
-	data: {},
-	expressions: []
+    constrains: [],
+    loggerError: {},
+    data: {},
+    expressions: [],
+    itemsToValidate: {}
 };
 
 var Validate = {
-	validate: function () {
-		exec.constrains.forEach(function (constrain) {
-			exec.expressions.push(new Expression(constrain));
-		});
+    validate: function () {
+        exec.constrains.forEach(function (constrain) {
+            exec.expressions = exec.expressions.concat(new Expressions(constrain));
+        });
 
-		exec.expressions.forEach(function (expression) {
-			if (!validators.exec(expression)) {
-				var param = expression.params[0].replace('$', '');
-				exec.loggerError[param] = exec.loggerError[param] || [];
-				exec.loggerError[param].push(expression.method);
-			}
-		});
-	}
+        exec.expressions.forEach(function (expression) {
+            validators.exec(expression, exec.loggerError);
+        });
+    }
 };
 
 var DataValidator = {
-	outErrors: function (error) {
-		exec.loggerError = error;
+    outErrors: function (error) {
+        exec.loggerError = error;
 
-		return this;
-	},
-	forData: function (data) {
-		exec.data = data;
+        return this;
+    },
+    forData: function (data) {
+        exec.data = data;
 
-		return Validate;
-	}
+        return Validate;
+    }
 };
 
 var ConstrainsValidator = {
-	using: function (constrains) {
-		exec.constrains = constrains;
+    using: function (constrains) {
 
-		return DataValidator;
-	}
+        exec.constrains = constrains;
+        exec.loggerError = {};
+        exec.data = {},
+        exec.expressions = [];
+        exec.itemsToValidate = {};
+
+        return DataValidator;
+    }
 };
 
-var Expression = function (constrain) {
-	var expr = util.expressionToArray(constrain);
-	this.method = expr.shift();
-	this.params = expr;
-	var paramsValue = [];
+var Expressions = function (constrain) {
+    var result = [];
+    var items = [];
 
-	this.params.forEach(function (param) {
-		if (/^\$/.test(param)) {
-			paramsValue.unshift(util.deep(exec.data, param.replace('$', '')));
-			return;
-		}
-		paramsValue.push(param);
-	});
+    var expression = util.expressionToArray(constrain);
+    var method = expression.shift();
+    var params = expression;
 
-	this.paramsValue = paramsValue;
+    params.forEach(function (param) {
+        if (/^\$/.test(param)) {
+            var itemsExtracted = new Extractor(exec.data).extract(param.replace('$', ''));
+            items = items.concat(itemsExtracted);
+        } else {
+            items = items.concat(new LiteralItem(param));
+        }
+    });
+
+    if(params.length === 1) {
+
+        items.forEach(function(item){
+            result.push(new Expression(item, method));
+        });
+
+        return result;
+    }
+
+    result.push(new Expression(items, method));
+
+    return result;
+};
+
+var LiteralItem = function(value) {
+    return new Extractor(value).extract('literalvalue');
+}
+
+var Expression = function(items, method) {
+    var expression = {};
+    expression.method = method;
+    expression.paramsValue = items;
+
+    return expression;
 };
 
 module.exports = ConstrainsValidator;
-},{"./util":3,"./validators":6}],3:[function(require,module,exports){
+},{"./extractor":3,"./util":4,"./validators":7}],3:[function(require,module,exports){
+'use strict';
+
+var util = require('./util');
+
+/**
+ * @author Guilherme M Gregio <guilherme@gregio.net>
+ * @author Bruno M Marques <zaccabruno@gmail.com>
+ */
+var Extractor = function (data) {
+
+    var object = data;
+
+    this.extract = function (path) {
+        return extractor(object, path);
+    };
+
+    var extractor = function(obj, fullPath, position, path, result) {
+
+        if(fullPath === 'literalvalue') {
+            result = [];
+            result.push(new Item(fullPath, obj));
+            return result;
+        }
+
+        var pathArr = fullPath.split('.');
+        result = result || [];
+        path = path || '';
+        position = position || 0;
+
+        obj = obj[pathArr[position]];
+        path = path + '.' + pathArr[position];
+        path = path.replace(/^\./, '');
+
+        if (pathArr.length - 1 <= position) {
+            result.push(new Item(path, obj));
+            return result;
+        }
+
+        if (Array.isArray(obj)) {
+
+            path = path.concat('[:index]');
+            obj.forEach(function (item, index) {
+                var newPath = path.replace(':index', index);
+                extractor(item, fullPath, position + 1, newPath, result);
+            });
+
+            return result;
+        }
+
+        return extractor(obj, fullPath, position + 1, path, result);
+    };
+
+};
+
+var Item = function(key, value) {
+    this.key = key;
+    this.value = value;
+};
+
+module.exports = Extractor;
+},{"./util":4}],4:[function(require,module,exports){
 'use strict';
 /*global toString*/
 /**
@@ -209,7 +299,7 @@ util.clone = function clone(item) {
 };
 
 module.exports = util;
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 var util = require('./util');
 var execValidators = require('./execValidators');
@@ -268,7 +358,7 @@ var InvalidArguments = function (message) {
 };
 
 module.exports = Validator;
-},{"./execValidators":2,"./util":3,"./validatorResult":5}],5:[function(require,module,exports){
+},{"./execValidators":2,"./util":4,"./validatorResult":6}],6:[function(require,module,exports){
 'use strict';
 var util = require('./util');
 var validators = require('./validators');
@@ -309,7 +399,7 @@ var ValidatorResult = function (errors) {
 
 			var method = "has:ValidatorPassed".replace(":Validator", name);
 			self[method] = function () {
-				return (util.deep(_errors, field) || []).indexOf(validator) === -1;
+				return (_errors[field] || []).indexOf(validator) === -1;
 			};
 		});
 	};
@@ -317,7 +407,7 @@ var ValidatorResult = function (errors) {
 };
 
 module.exports = ValidatorResult;
-},{"./util":3,"./validators":6}],6:[function(require,module,exports){
+},{"./util":4,"./validators":7}],7:[function(require,module,exports){
 'use strict';
 /**
  * @author Guilherme M Gregio <guilherme@gregio.net>
@@ -328,14 +418,18 @@ var validators = {
 	defaultMethod: function () {
 		return true;
 	},
-	exec: function (expression) {
+	exec: function (expression, loggerError) {
 		var fn = (validators[expression.method] || validators.defaultMethod);
-		return fn.apply(this, expression.paramsValue);
+
+        if(!fn.call(this, expression.paramsValue)) {
+            loggerError[expression.paramsValue.key] = loggerError[expression.paramsValue.key] || [];
+            loggerError[expression.paramsValue.key].push(expression.method);
+        }
 	}
 };
 
 module.exports = validators;
-},{"./validators/isEmail":7,"./validators/notEmpty":8}],7:[function(require,module,exports){
+},{"./validators/isEmail":8,"./validators/notEmpty":9}],8:[function(require,module,exports){
 'use strict';
 /**
  * @author Guilherme M Gregio <guilherme@gregio.net>
@@ -347,17 +441,17 @@ var isEmail = function (email) {
 };
 
 module.exports = isEmail;
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 var util = require('../util');
 
 /**
  * @author Guilherme M Gregio <guilherme@gregio.net>
  */
-var notEmpty = function (value) {
-	return !util.isEmpty(value);
+var notEmpty = function (item) {
+    return !util.isEmpty(item.value);
 };
 
 module.exports = notEmpty;
-},{"../util":3}]},{},[1])(1)
+},{"../util":4}]},{},[1])(1)
 });
