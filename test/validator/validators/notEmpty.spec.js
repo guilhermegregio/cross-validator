@@ -8,17 +8,35 @@ suite('notEmpty', function () {
 	var notEmpty = require(source.concat('/notEmpty'));
 
 	test('should return false for empty values of: strings, arrays, objects, etc', function () {
-		assert.isFalse(notEmpty(''));
-		assert.isFalse(notEmpty([]));
-		assert.isFalse(notEmpty({}));
-		assert.isFalse(notEmpty(null));
-		assert.isFalse(notEmpty(undefined));
+        var item = {};
+
+        item.value = '';
+		assert.isFalse(notEmpty(item));
+
+        item.value = [];
+		assert.isFalse(notEmpty(item));
+
+        item.value = {};
+		assert.isFalse(notEmpty(item));
+
+        item.value = null;
+		assert.isFalse(notEmpty(item));
+
+        item.value = undefined;
+		assert.isFalse(notEmpty(item));
 	});
 
 	test('should return true for not empty values of: strings, arrays, objects, etc', function () {
-		assert.isTrue(notEmpty('value'));
-		assert.isTrue(notEmpty([1]));
-		assert.isTrue(notEmpty({a:1}));
+        var item = {};
+
+        item.value = 'value';
+		assert.isTrue(notEmpty(item));
+
+        item.value = [1];
+		assert.isTrue(notEmpty(item));
+
+        item.value = {a:1};
+		assert.isTrue(notEmpty(item));
 	});
 
 });
