@@ -1,0 +1,28 @@
+{
+	"name": "cross-validator",
+	"version": "0.0.1",
+	"homepage": "https://github.com/4data/cross-validator.git",
+	"authors": [
+		"Guilherme Mangabeira Gregio <guilherme@gregio.net>",
+		"Rafael Antonio Lucio <rafaelantoniolucio@gmai.com>"
+	],
+	"description": "Validator Javascript Cross-Plataform",
+	"main": "./build/validator.min.js",
+	"keywords": [
+		"validator"
+	],
+	"ignore": [
+		"test",
+		".gitignore",
+		".jshintrc",
+		"bower.json",
+		"package.json",
+		".travis.yml",
+		"README.md"
+	],
+	"license": "MIT",
+	"devDependencies": {
+	},
+	"dependencies": {
+	}
+}
