@@ -4,7 +4,8 @@
 	"homepage": "https://github.com/4data/cross-validator.git",
 	"authors": [
 		"Guilherme Mangabeira Gregio <guilherme@gregio.net>",
-		"Rafael Antonio Lucio <rafaelantoniolucio@gmai.com>"
+		"Rafael Antonio Lucio <rafaelantoniolucio@gmai.com>",
+		"Bruno Zaccaria Marques <zaccabruno@gmail.com>"
 	],
 	"description": "Validator Javascript Cross-Plataform",
 	"main": "./build/validator.min.js",
