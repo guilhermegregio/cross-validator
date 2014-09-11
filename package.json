@@ -21,7 +21,11 @@
 		"java",
 		"node"
 	],
-	"author": "Guilherme M Gregio <guilherme@gregio.net>",
+	"author": [
+		"Guilherme Mangabeira Gregio <guilherme@gregio.net>",
+		"Rafael Antonio Lucio <rafaelantoniolucio@gmai.com>",
+		"Bruno Zaccaria Marques <zaccabruno@gmail.com>"
+	],
 	"license": "MIT",
 	"devDependencies": {
 		"browserify": "^5.10.0",
