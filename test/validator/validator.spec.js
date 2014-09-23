@@ -28,9 +28,9 @@ suite('Validator', function () {
 		});
 	});
 
-	suite('Execute validate()', function(){
+	suite('Execute validate()', function () {
 		var ValidatorResult = require(source.concat('/validatorResult'));
-		test('should return validatorResult', function(){
+		test('should return validatorResult', function () {
 			var vResult = new Validator({name: 'guilherme'}, ['notEmpty($name)']).validate();
 
 			assert.instanceOf(vResult, ValidatorResult, 'vResult is instance of ValidatorResult');

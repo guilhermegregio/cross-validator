@@ -8,10 +8,10 @@ suite('isEmail', function () {
 	var isEmail = require(source.concat('/isEmail'));
 
 	test('should return true if passed valid email', function () {
-		assert.isTrue(isEmail('email@gmail.com'));
+		assert.isTrue(isEmail({value: 'email@gmail.com'}));
 	});
 
 	test('should return false if passed invalid email', function () {
-		assert.isFalse(isEmail('email.com.br'));
+		assert.isFalse(isEmail({value: 'email.com.br'}));
 	});
 });
