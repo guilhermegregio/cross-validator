@@ -1,42 +1,42 @@
 {
-	"name": "cross-validator",
-	"version": "0.0.1-snapshot",
-	"description": "A Cross Script Validator, node, browser, java",
-	"main": "src/index.js",
-	"scripts": {
-		"all": "npm test; npm run coverage; npm run minify",
-		"test": "npm run jshint; ./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
-		"watch": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js --watch",
-		"coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js test/*/*/*.js",
-		"jshint": "./node_modules/.bin/jshint ./src",
-		"browserify": "./node_modules/.bin/browserify ./src/index.js -o ./build/validator.js -s Validator",
-		"minify": "npm run browserify; ./node_modules/.bin/uglifyjs -o ./build/validator.min.js ./build/validator.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/4data/cross-validator.git"
-	},
-	"keywords": [
-		"cross",
-		"validate",
-		"validator",
-		"validating",
-		"javascript",
-		"java",
-		"node"
-	],
-	"author": [
-		"Guilherme Mangabeira Gregio <guilherme@gregio.net>",
-		"Rafael Antonio Lucio <rafaelantoniolucio@gmai.com>",
-		"Bruno Zaccaria Marques <zaccabruno@gmail.com>"
-	],
-	"license": "MIT",
-	"devDependencies": {
-		"browserify": "^5.10.0",
-		"chai": "^1.9.1",
-		"istanbul": "^0.3.0",
-		"jshint": "^2.5.3",
-		"mocha": "^1.21.4",
-		"uglify-js": "^2.4.15"
-	}
+  "name": "cross-validator",
+  "version": "0.0.1",
+  "description": "A Cross Script Validator, node, browser, java",
+  "main": "src/index.js",
+  "scripts": {
+    "all": "npm test; npm run coverage; npm run minify",
+    "test": "npm run jshint; ./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
+    "watch": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js --watch",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js test/*/*/*.js",
+    "jshint": "./node_modules/.bin/jshint ./src",
+    "browserify": "./node_modules/.bin/browserify ./src/index.js -o ./build/validator.js -s Validator",
+    "minify": "npm run browserify; ./node_modules/.bin/uglifyjs -o ./build/validator.min.js ./build/validator.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/4data/cross-validator.git"
+  },
+  "keywords": [
+    "cross",
+    "validate",
+    "validator",
+    "validating",
+    "javascript",
+    "java",
+    "node"
+  ],
+  "author": [
+    "Guilherme Mangabeira Gregio <guilherme@gregio.net>",
+    "Rafael Antonio Lucio <rafaelantoniolucio@gmai.com>",
+    "Bruno Zaccaria Marques <zaccabruno@gmail.com>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^5.10.0",
+    "chai": "^1.9.1",
+    "istanbul": "^0.3.0",
+    "jshint": "^2.5.3",
+    "mocha": "^1.21.4",
+    "uglify-js": "^2.4.15"
+  }
 }
