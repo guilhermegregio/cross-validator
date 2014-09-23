@@ -7,92 +7,92 @@ var Extractor = require('./extractor');
  * @author Guilherme M Gregio <guilherme@gregio.net>
  */
 var exec = {
-    constrains: [],
-    loggerError: {},
-    data: {},
-    expressions: [],
-    itemsToValidate: {}
+	constrains: [],
+	loggerError: {},
+	data: {},
+	expressions: [],
+	itemsToValidate: {}
 };
 
 var Validate = {
-    validate: function () {
-        exec.constrains.forEach(function (constrain) {
-            exec.expressions = exec.expressions.concat(new Expressions(constrain));
-        });
+	validate: function () {
+		exec.constrains.forEach(function (constrain) {
+			exec.expressions = exec.expressions.concat(new Expressions(constrain));
+		});
 
-        exec.expressions.forEach(function (expression) {
-            validators.exec(expression, exec.loggerError);
-        });
-    }
+		exec.expressions.forEach(function (expression) {
+			validators.exec(expression, exec.loggerError);
+		});
+	}
 };
 
 var DataValidator = {
-    outErrors: function (error) {
-        exec.loggerError = error;
+	outErrors: function (error) {
+		exec.loggerError = error;
 
-        return this;
-    },
-    forData: function (data) {
-        exec.data = data;
+		return this;
+	},
+	forData: function (data) {
+		exec.data = data;
 
-        return Validate;
-    }
+		return Validate;
+	}
 };
 
 var ConstrainsValidator = {
-    using: function (constrains) {
+	using: function (constrains) {
 
-        exec.constrains = constrains;
-        exec.loggerError = {};
-        exec.data = {},
-        exec.expressions = [];
-        exec.itemsToValidate = {};
+		exec.constrains = constrains;
+		exec.loggerError = {};
+		exec.data = {},
+			exec.expressions = [];
+		exec.itemsToValidate = {};
 
-        return DataValidator;
-    }
+		return DataValidator;
+	}
 };
 
 var Expressions = function (constrain) {
-    var result = [];
-    var items = [];
+	var result = [];
+	var items = [];
 
-    var expression = util.expressionToArray(constrain);
-    var method = expression.shift();
-    var params = expression;
+	var expression = util.expressionToArray(constrain);
+	var method = expression.shift();
+	var params = expression;
 
-    params.forEach(function (param) {
-        if (/^\$/.test(param)) {
-            var itemsExtracted = new Extractor(exec.data).extract(param.replace('$', ''));
-            items = items.concat(itemsExtracted);
-        } else {
-            items = items.concat(new LiteralItem(param));
-        }
-    });
+	params.forEach(function (param) {
+		if (/^\$/.test(param)) {
+			var itemsExtracted = new Extractor(exec.data).extract(param.replace('$', ''));
+			items = items.concat(itemsExtracted);
+		} else {
+			items = items.concat(new LiteralItem(param));
+		}
+	});
 
-    if(params.length === 1) {
+	if (params.length === 1) {
 
-        items.forEach(function(item){
-            result.push(new Expression(item, method));
-        });
+		items.forEach(function (item) {
+			result.push(new Expression(item, method));
+		});
 
-        return result;
-    }
+		return result;
+	}
 
-    result.push(new Expression(items, method));
+	result.push(new Expression(items, method));
 
-    return result;
+	return result;
 };
 
-var LiteralItem = function(value) {
-    return new Extractor(value).extract('literalvalue');
-}
+var LiteralItem = function (value) {
+	return new Extractor(value).extract('literalvalue');
+};
 
-var Expression = function(items, method) {
-    var expression = {};
-    expression.method = method;
-    expression.paramsValue = items;
+var Expression = function (items, method) {
+	var expression = {};
+	expression.method = method;
+	expression.paramsValue = items;
 
-    return expression;
+	return expression;
 };
 
 module.exports = ConstrainsValidator;

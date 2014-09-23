@@ -12,6 +12,10 @@
 		"browserify": "./node_modules/.bin/browserify ./src/index.js -o ./build/validator.js -s Validator",
 		"minify": "npm run browserify; ./node_modules/.bin/uglifyjs -o ./build/validator.min.js ./build/validator.js"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/4data/cross-validator.git"
+	},
 	"keywords": [
 		"cross",
 		"validate",
