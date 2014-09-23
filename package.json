@@ -1,6 +1,6 @@
 {
   "name": "cross-validator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Cross Script Validator, node, browser, java",
   "main": "src/index.js",
   "scripts": {
