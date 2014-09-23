@@ -421,10 +421,10 @@ var validators = {
 	exec: function (expression, loggerError) {
 		var fn = (validators[expression.method] || validators.defaultMethod);
 
-        if(!fn.call(this, expression.paramsValue)) {
-            loggerError[expression.paramsValue.key] = loggerError[expression.paramsValue.key] || [];
-            loggerError[expression.paramsValue.key].push(expression.method);
-        }
+		if (!fn.call(this, expression.paramsValue)) {
+			loggerError[expression.paramsValue.key] = loggerError[expression.paramsValue.key] || [];
+			loggerError[expression.paramsValue.key].push(expression.method);
+		}
 	}
 };
 
@@ -434,10 +434,10 @@ module.exports = validators;
 /**
  * @author Guilherme M Gregio <guilherme@gregio.net>
  */
-var isEmail = function (email) {
+var isEmail = function (item) {
 	var isMail = /^[a-z0-9_]+@[a-z0-9_]+\.[a-z]{3}(\.[a-z]{2})?$/g;
 
-	return isMail.test(email);
+	return isMail.test(item.value);
 };
 
 module.exports = isEmail;
