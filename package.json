@@ -9,7 +9,7 @@
     "watch": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js --watch",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js test/*/*/*.js",
     "jshint": "./node_modules/.bin/jshint ./src",
-    "browserify": "./node_modules/.bin/browserify ./src/index.js -o ./build/validator.js -s Validator",
+    "browserify": "./node_modules/.bin/browserify ./src/browserify.js -o ./build/validator.js -s Validator",
     "minify": "npm run browserify; ./node_modules/.bin/uglifyjs -o ./build/validator.min.js ./build/validator.js"
   },
   "repository": {
@@ -32,11 +32,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "browserify": "^5.10.0",
-    "chai": "^1.9.1",
-    "istanbul": "^0.3.0",
-    "jshint": "^2.5.3",
-    "mocha": "^1.21.4",
-    "uglify-js": "^2.4.15"
+    "browserify": "^9.0.3",
+    "chai": "^2.1.0",
+    "istanbul": "^0.3.6",
+    "jshint": "^2.6.3",
+    "mocha": "^2.1.0",
+    "uglify-js": "^2.4.16"
   }
 }
