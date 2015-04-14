@@ -17,10 +17,6 @@
 	});
 
 	util.isEmpty = function (obj) {
-		if (obj == null) {
-			return true;
-		}
-
 		if (util.isArray(obj) || util.isString(obj) || util.isArguments(obj)) {
 			return obj.length === 0;
 		}
