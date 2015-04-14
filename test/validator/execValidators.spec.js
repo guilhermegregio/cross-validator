@@ -10,7 +10,9 @@ suite('execValidators', function () {
 	test('should added errors on object errors', function () {
 		var constrains = ['notEmpty($name)'];
 		var errors = {};
-		var data = {};
+		var data = {
+            name: ''
+        };
 
 		new execValidators.using(constrains).outErrors(errors).forData(data).validate();
 
@@ -22,8 +24,12 @@ suite('execValidators', function () {
         var errors = {};
         var data = {};
 
-        var deposit = {};
-        var deposit2 = {};
+        var deposit = {
+            name: ''
+        };
+        var deposit2 = {
+            name: ''
+        };
 
         data.deposits = [];
 
@@ -50,7 +56,9 @@ suite('execValidators', function () {
         var data = {};
 
         data.bankAccount = {
-            bank: {}
+            bank: {
+                name: ''
+            }
         };
 
 

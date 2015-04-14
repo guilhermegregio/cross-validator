@@ -17,6 +17,10 @@
 	});
 
 	util.isEmpty = function (obj) {
+		if (obj === undefined || obj === null) {
+			return false;
+		}
+
 		if (util.isArray(obj) || util.isString(obj) || util.isArguments(obj)) {
 			return obj.length === 0;
 		}

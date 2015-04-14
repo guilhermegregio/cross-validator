@@ -199,6 +199,10 @@
 	});
 
 	util.isEmpty = function (obj) {
+		if (obj === undefined || obj === null) {
+			return false;
+		}
+
 		if (util.isArray(obj) || util.isString(obj) || util.isArguments(obj)) {
 			return obj.length === 0;
 		}
@@ -432,6 +436,7 @@
 	 */
 	var validators = {
 		notEmpty: require('./validators/notEmpty'),
+		notNull: require('./validators/notNull'),
 		isEmail: require('./validators/isEmail'),
 		isNumber: require('./validators/isNumber'),
 		defaultMethod: function () {
@@ -449,7 +454,7 @@
 
 	module.exports = validators;
 })();
-},{"./validators/isEmail":9,"./validators/isNumber":10,"./validators/notEmpty":11}],9:[function(require,module,exports){
+},{"./validators/isEmail":9,"./validators/isNumber":10,"./validators/notEmpty":11,"./validators/notNull":12}],9:[function(require,module,exports){
 (function () {
 	'use strict';
 	/**
@@ -490,6 +495,20 @@
 	};
 
 	module.exports = notEmpty;
+})();
+},{"../util":5}],12:[function(require,module,exports){
+(function () {
+	'use strict';
+	var util = require('../util');
+
+	/**
+	 * @author Guilherme M Gregio <guilherme@gregio.net>
+	 */
+	var notNull = function (item) {
+		return item.value !== null && item.value !== undefined;
+	};
+
+	module.exports = notNull;
 })();
 },{"../util":5}]},{},[1])(1)
 });

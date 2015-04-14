@@ -5,6 +5,7 @@
 	 */
 	var validators = {
 		notEmpty: require('./validators/notEmpty'),
+		notNull: require('./validators/notNull'),
 		isEmail: require('./validators/isEmail'),
 		isNumber: require('./validators/isNumber'),
 		defaultMethod: function () {

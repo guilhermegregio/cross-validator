@@ -36,8 +36,8 @@ suite('Util', function () {
 		assert.isTrue(util.isEmpty(''));
 		assert.isTrue(util.isEmpty([]));
 		assert.isTrue(util.isEmpty({}));
-		assert.isTrue(util.isEmpty(null));
-		assert.isTrue(util.isEmpty(undefined));
+		assert.isFalse(util.isEmpty(null));
+		assert.isFalse(util.isEmpty(undefined));
 		assert.isTrue(util.isEmpty(0));
 	});
 

@@ -20,10 +20,10 @@ suite('notEmpty', function () {
 		assert.isFalse(notEmpty(item));
 
         item.value = null;
-		assert.isFalse(notEmpty(item));
+		assert.isTrue(notEmpty(item));
 
         item.value = undefined;
-		assert.isFalse(notEmpty(item));
+		assert.isTrue(notEmpty(item));
 	});
 
 	test('should return true for not empty values of: strings, arrays, objects, etc', function () {
