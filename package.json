@@ -4,13 +4,16 @@
   "description": "A Cross Script Validator, node, browser, java",
   "main": "src/index.js",
   "scripts": {
+    "pretest": "npm run compile",
+    "test": "mocha -R spec test/",
+    "compile": "tsc --module commonjs test/*.ts",
+    "start": "node --harmony src-new/index.js",
     "all": "npm test; npm run coverage; npm run minify",
-    "test": "npm run jshint; ./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
-    "watch": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js --watch",
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js test/*/*/*.js",
-    "jshint": "./node_modules/.bin/jshint ./src",
-    "browserify": "./node_modules/.bin/browserify ./src/browserify.js -o ./build/validator.js -s Validator",
-    "minify": "npm run browserify; ./node_modules/.bin/uglifyjs -o ./build/validator.min.js ./build/validator.js"
+    "watch": "mocha test/*.js test/*/*.js test/*/*/*.js --watch",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js test/*/*/*.js",
+    "jshint": "jshint ./src",
+    "browserify": "browserify ./src/browserify.js -o ./build/validator.js -s Validator",
+    "minify": "npm run browserify; uglifyjs -o ./build/validator.min.js ./build/validator.js"
   },
   "repository": {
     "type": "git",
@@ -32,11 +35,13 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "browserify": "^9.0.3",
-    "chai": "^2.1.0",
+    "chai": "^2.2.0",
     "istanbul": "^0.3.6",
-    "jshint": "^2.6.3",
-    "mocha": "^2.1.0",
-    "uglify-js": "^2.4.16"
+    "mocha": "^2.2.4",
+    "typescript-loader": "^1.1.3",
+    "uglify-js": "^2.4.16",
+    "webpack": "^1.8.4"
+  },
+  "dependencies": {
   }
 }
