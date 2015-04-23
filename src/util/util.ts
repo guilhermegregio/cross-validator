@@ -48,6 +48,18 @@ module Util {
 		var result = object == null ? undefined : baseGet(object, toPath(path), path + '');
 		return result === undefined ? defaultValue : result;
 	}
+
+	export function concatAll(array) {
+		var results = [];
+
+		array.forEach(function (subArray) {
+			subArray.forEach(function (item) {
+				results.push(item);
+			});
+		});
+
+		return results;
+	}
 }
 
 export = Util;

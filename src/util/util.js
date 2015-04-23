@@ -42,5 +42,15 @@ var Util;
         return result === undefined ? defaultValue : result;
     }
     Util.get = get;
+    function concatAll(array) {
+        var results = [];
+        array.forEach(function (subArray) {
+            subArray.forEach(function (item) {
+                results.push(item);
+            });
+        });
+        return results;
+    }
+    Util.concatAll = concatAll;
 })(Util || (Util = {}));
 module.exports = Util;
