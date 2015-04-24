@@ -1,42 +1,48 @@
 {
-  "name": "cross-validator",
-  "version": "0.0.5",
-  "description": "A Cross Script Validator, node, browser, java",
-  "main": "src/index.js",
-  "scripts": {
-    "all": "npm test; npm run coverage; npm run minify",
-    "test": "npm run jshint; ./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js",
-    "watch": "./node_modules/mocha/bin/mocha test/*.js test/*/*.js test/*/*/*.js --watch",
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js test/*/*/*.js",
-    "jshint": "./node_modules/.bin/jshint ./src",
-    "browserify": "./node_modules/.bin/browserify ./src/browserify.js -o ./build/validator.js -s Validator",
-    "minify": "npm run browserify; ./node_modules/.bin/uglifyjs -o ./build/validator.min.js ./build/validator.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/4data/cross-validator.git"
-  },
-  "keywords": [
-    "cross",
-    "validate",
-    "validator",
-    "validating",
-    "javascript",
-    "java",
-    "node"
-  ],
-  "author": [
-    "Guilherme Mangabeira Gregio <guilherme@gregio.net>",
-    "Rafael Antonio Lucio <rafaelantoniolucio@gmai.com>",
-    "Bruno Zaccaria Marques <zaccabruno@gmail.com>"
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "browserify": "^9.0.3",
-    "chai": "^2.1.0",
-    "istanbul": "^0.3.6",
-    "jshint": "^2.6.3",
-    "mocha": "^2.1.0",
-    "uglify-js": "^2.4.16"
-  }
+    "name": "cross-validator",
+    "version": "0.0.5",
+    "description": "A Cross Script Validator, node, browser, java",
+    "main": "src/cross-validation.js",
+    "scripts": {
+        "postinstall": "tsd reinstall",
+        "compile": "tsc --module commonjs test/*.ts test/*/*.ts",
+        "build": "webpack",
+        "postbuild": "npm run build:minify",
+        "build:minify": "webpack -p --config ./webpack.production.config.js",
+        "postbuild:minify": "uglifyjs -c -m -o ./build/cross-validation.min.js -- ./build/cross-validation.min.js",
+        "pretest": "npm run compile",
+        "test": "mocha -R spec test/ test/*/",
+        "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js",
+        "precoverage": "npm run compile"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/4data/cross-validator.git"
+    },
+    "keywords": [
+        "cross",
+        "validate",
+        "validator",
+        "validating",
+        "javascript",
+        "java",
+        "node"
+    ],
+    "author": [
+        "Guilherme Mangabeira Gregio <guilherme@gregio.net>",
+        "Rafael Antonio Lucio <rafaelantoniolucio@gmai.com>",
+        "Bruno Zaccaria Marques <zaccabruno@gmail.com>"
+    ],
+    "license": "MIT",
+    "devDependencies": {
+        "chai": "^2.2.0",
+        "istanbul": "^0.3.6",
+        "mocha": "^2.2.4",
+        "tsd": "^0.5.7",
+        "typescript": "^1.5.0-alpha",
+        "typescript-loader": "^1.1.3",
+        "uglify-js": "^2.4.16",
+        "webpack": "^1.8.4"
+    },
+    "dependencies": {}
 }
