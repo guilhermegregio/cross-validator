@@ -10,7 +10,9 @@ describe('notNull', function () {
     });
     it('should notNull invalid', function () {
         var validatorNotValid = new NotNull([], [null]);
+        var validatorNotValid2 = new NotNull([], [undefined]);
         assert.equal(validatorNotValid.isValid(), false);
+        assert.equal(validatorNotValid2.isValid(), false);
     });
     it('should notNull valid', function () {
         var validatorNotValid = new NotNull([], ['guilherme']);

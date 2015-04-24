@@ -3,7 +3,7 @@ var notNull = (function () {
         this.value = paramsParsed[0];
     }
     notNull.prototype.isValid = function () {
-        return this.value !== null;
+        return this.value !== null && this.value !== undefined;
     };
     notNull.prototype.getTemplateMessage = function () {
         return '%s não pode ser nulo';

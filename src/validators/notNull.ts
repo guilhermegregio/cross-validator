@@ -8,7 +8,7 @@ class notNull implements Validator {
 	}
 
 	isValid() {
-		return this.value !== null;
+		return this.value !== null && this.value !== undefined;
 	}
 
 	getTemplateMessage() {
