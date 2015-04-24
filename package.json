@@ -2,7 +2,7 @@
     "name": "cross-validator",
     "version": "0.0.5",
     "description": "A Cross Script Validator, node, browser, java",
-    "main": "src/index.js",
+    "main": "src/cross-validation.js",
     "scripts": {
         "postinstall": "tsd reinstall",
         "compile": "tsc --module commonjs test/*.ts test/*/*.ts",
