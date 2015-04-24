@@ -11,7 +11,8 @@
         "postbuild": "npm run build:minify",
         "build:minify": "webpack -p --config ./webpack.production.config.js",
         "postbuild:minify": "uglifyjs -c -m -o ./build/cross-validation.min.js -- ./build/cross-validation.min.js",
-        "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js"
+        "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js",
+        "precoverage": "npm run compile"
     },
     "repository": {
         "type": "git",

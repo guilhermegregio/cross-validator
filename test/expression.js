@@ -24,4 +24,8 @@ describe('Expression', function () {
             "type": "notNull"
         }]);
     });
+    it('should valid with value literal', function () {
+        var expr = new Expression('notNull(guilherme)', {});
+        assert.isTrue(expr.isValid());
+    });
 });
