@@ -9,7 +9,7 @@ import NotNull = require('../../src/validators/notNull');
 describe('notNull', () => {
 	it('should get a template message', () => {
 		var validator = new NotNull([], []);
-		assert.equal(validator.getTemplateMessage(), 'Campo não pode ser nulo');
+		assert.equal(validator.getTemplateMessage(), '%s não pode ser nulo');
 	});
 
 	it('should notNull invalid', () => {

@@ -1,10 +1,12 @@
 import Validator = require('./validators/validator');
 import Noop = require('./validators/noop');
 import notNull = require('./validators/notNull');
+import isEmail = require('./validators/isEmail');
 
 var Validators = {
 	getValidator,
-	notNull
+	notNull,
+	isEmail
 };
 
 function getValidator(method, params, paramsParsed):Validator {

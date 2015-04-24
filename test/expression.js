@@ -20,7 +20,7 @@ describe('Expression', function () {
         assert.isFalse(expr.isValid());
         assert.deepEqual(expr.getMessageError(), [{
             "field": "name",
-            "message": "Campo não pode ser nulo",
+            "message": "name não pode ser nulo",
             "type": "notNull"
         }]);
     });

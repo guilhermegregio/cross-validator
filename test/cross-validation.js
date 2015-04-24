@@ -13,13 +13,13 @@ describe('CrossValidation', function () {
     it('should validate return validator result', function () {
         var errors = [{
             "field": "name",
-            "message": "Campo não pode ser nulo",
+            "message": "name não pode ser nulo",
             "type": "notNull"
         }];
         var vResult = CrossValidation.forData({ name: null }).using(['notNull($name)']).getResult();
         assert.isFalse(vResult.isValid());
         assert.deepEqual(vResult.getAllFailures(), errors);
         assert.deepEqual(vResult.getAllErrors('name'), errors);
-        assert.equal(vResult.getError('name', 'notNull'), 'Campo não pode ser nulo');
+        assert.equal(vResult.getError('name', 'notNull'), errors[0].message);
     });
 });

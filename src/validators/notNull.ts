@@ -12,7 +12,7 @@ class notNull implements Validator {
 	}
 
 	getTemplateMessage() {
-		return 'Campo não pode ser nulo';
+		return '%s não pode ser nulo';
 	}
 }
 

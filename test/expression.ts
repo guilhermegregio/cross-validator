@@ -30,7 +30,7 @@ describe('Expression', () => {
 
 		assert.deepEqual(expr.getMessageError(), [{
 			"field": "name",
-			"message": "Campo não pode ser nulo",
+			"message": "name não pode ser nulo",
 			"type": "notNull"
 		}]);
 	});

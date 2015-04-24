@@ -6,7 +6,7 @@ var notNull = (function () {
         return this.value !== null;
     };
     notNull.prototype.getTemplateMessage = function () {
-        return 'Campo não pode ser nulo';
+        return '%s não pode ser nulo';
     };
     return notNull;
 })();

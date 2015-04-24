@@ -18,7 +18,7 @@ describe('CrossValidation', () => {
 	it('should validate return validator result', () => {
 		var errors = [{
 			"field": "name",
-			"message": "Campo não pode ser nulo",
+			"message": "name não pode ser nulo",
 			"type": "notNull"
 		}];
 
@@ -27,6 +27,6 @@ describe('CrossValidation', () => {
 		assert.isFalse(vResult.isValid());
 		assert.deepEqual(vResult.getAllFailures(), errors);
 		assert.deepEqual(vResult.getAllErrors('name'), errors);
-		assert.equal(vResult.getError('name', 'notNull'), 'Campo não pode ser nulo');
+		assert.equal(vResult.getError('name', 'notNull'), errors[0].message);
 	});
 });

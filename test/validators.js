@@ -13,7 +13,7 @@ describe('Validators', function () {
         var validatorValid = Validators.getValidator('notNull', [], ['guilherme']);
         var validatorNotValid = Validators.getValidator('notNull', [], [null]);
         assert.equal(validatorValid.isValid(), true);
-        assert.equal(validatorValid.getTemplateMessage(), 'Campo não pode ser nulo');
+        assert.equal(validatorValid.getTemplateMessage(), '%s não pode ser nulo');
         assert.equal(validatorNotValid.isValid(), false);
     });
 });

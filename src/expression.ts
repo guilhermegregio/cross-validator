@@ -60,7 +60,7 @@ class Expression {
 		var message = this.validator.getTemplateMessage();
 
 		this.params.forEach(function (param) {
-			message = message.replace('%s', param);
+			message = message.replace('%s', param.replace(Expression.erStartWithDollar, ''));
 		});
 
 		return message;
