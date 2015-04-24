@@ -4,13 +4,14 @@
     "description": "A Cross Script Validator, node, browser, java",
     "main": "src/index.js",
     "scripts": {
-        "pretest": "npm run compile",
-        "test": "mocha -R spec test/ test/*/",
+        "postinstall": "tsd reinstall",
         "compile": "tsc --module commonjs test/*.ts test/*/*.ts",
         "build": "webpack",
         "postbuild": "npm run build:minify",
         "build:minify": "webpack -p --config ./webpack.production.config.js",
         "postbuild:minify": "uglifyjs -c -m -o ./build/cross-validation.min.js -- ./build/cross-validation.min.js",
+        "pretest": "npm run compile",
+        "test": "mocha -R spec test/ test/*/",
         "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js",
         "precoverage": "npm run compile"
     },
@@ -37,6 +38,8 @@
         "chai": "^2.2.0",
         "istanbul": "^0.3.6",
         "mocha": "^2.2.4",
+        "tsd": "^0.5.7",
+        "typescript": "^1.5.0-alpha",
         "typescript-loader": "^1.1.3",
         "uglify-js": "^2.4.16",
         "webpack": "^1.8.4"

@@ -12,10 +12,10 @@ describe('CrossValidation', function () {
     });
     it('should validate return validator result', function () {
         var errors = [{
-            "field": "name",
-            "message": "name não pode ser nulo",
-            "type": "notNull"
-        }];
+                "field": "name",
+                "message": "name não pode ser nulo",
+                "type": "notNull"
+            }];
         var vResult = CrossValidation.forData({ name: null }).using(['notNull($name)']).getResult();
         assert.isFalse(vResult.isValid());
         assert.deepEqual(vResult.getAllFailures(), errors);

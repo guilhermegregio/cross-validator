@@ -19,10 +19,10 @@ describe('Expression', function () {
         var expr = new Expression('notNull($name)', data);
         assert.isFalse(expr.isValid());
         assert.deepEqual(expr.getMessageError(), [{
-            "field": "name",
-            "message": "name não pode ser nulo",
-            "type": "notNull"
-        }]);
+                "field": "name",
+                "message": "name não pode ser nulo",
+                "type": "notNull"
+            }]);
     });
     it('should valid with value literal', function () {
         var expr = new Expression('notNull(guilherme)', {});

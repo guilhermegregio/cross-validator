@@ -15,7 +15,8 @@ var ValidatorResult = (function () {
         });
     };
     ValidatorResult.prototype.getError = function (field, type) {
-        var error = this.errors.filter(function (error) {
+        var error = this.errors
+            .filter(function (error) {
             return error.field === field;
         }).filter(function (error) {
             return error.type === type;
