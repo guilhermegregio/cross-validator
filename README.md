@@ -2,6 +2,11 @@
 
 [![Build Status](https://travis-ci.org/4data/cross-validator.svg)](https://travis-ci.org/4data/cross-validator)
 
+## Utilização
+```javascript
+CrossValidator.forData({}).using([]).isValid();
+```
+
 ## Iniciando
 ```bash
 npm install
