@@ -8,6 +8,9 @@
         "test": "mocha -R spec test/ test/*/",
         "compile": "tsc --module commonjs test/*.ts test/*/*.ts",
         "build": "webpack",
+        "postbuild": "npm run build:minify",
+        "build:minify": "webpack -p --config ./webpack.production.config.js",
+        "postbuild:minify": "uglifyjs -c -m -o ./build/cross-validation.min.js -- ./build/cross-validation.min.js",
         "all": "npm test; npm run coverage; npm run minify",
         "watch": "mocha test/*.js test/*/*.js test/*/*/*.js --watch",
         "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js test/*/*/*.js",
@@ -42,6 +45,5 @@
         "uglify-js": "^2.4.16",
         "webpack": "^1.8.4"
     },
-    "dependencies": {
-    }
+    "dependencies": {}
 }
