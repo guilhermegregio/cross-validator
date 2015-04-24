@@ -7,7 +7,7 @@
         "pretest": "npm run compile",
         "test": "mocha -R spec test/ test/*/",
         "compile": "tsc --module commonjs test/*.ts test/*/*.ts",
-        "start": "node --harmony src-new/index.js",
+        "build": "webpack",
         "all": "npm test; npm run coverage; npm run minify",
         "watch": "mocha test/*.js test/*/*.js test/*/*/*.js --watch",
         "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test/*.js test/*/*.js test/*/*/*.js",

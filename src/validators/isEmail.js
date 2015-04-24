@@ -8,7 +8,7 @@ var IsEmail = (function () {
     IsEmail.prototype.getTemplateMessage = function () {
         return '%s deve conter um e-mail válido';
     };
-    IsEmail.reMail = /^[a-z0-9_]+@[a-z0-9_]+\.[a-z]{3}(\.[a-z]{2})?$/g;
+    IsEmail.reMail = /^[a-z0-9_.]+@[a-z0-9_]+\.[a-z]{3}(\.[a-z]{2})?$/g;
     return IsEmail;
 })();
 module.exports = IsEmail;

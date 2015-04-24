@@ -1,7 +1,7 @@
 module.exports = {
-	entry: "./src/cross-validator.ts",
+	entry: "./src/cross-validation.ts",
 	output: {
-		filename: "./build/cross-validator.js",
+		filename: "./build/cross-validation.js",
 		libraryTarget: "var",
 		library: "CrossValidator"
 	},
